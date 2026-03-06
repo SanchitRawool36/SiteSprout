@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require('passport');
 const Restaurant = require('./models/Restaurant');
 
-// --- AUTH ROUTES ---
-// Starts the Google Login process
+// --- GOOGLE AUTHENTICATION ---
+// This handles the "Cannot GET /auth/google" error
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Handles the return from Google
+// This handles the Redirect URI from your Google screenshot
 router.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
@@ -15,14 +15,14 @@ router.get('/auth/google/callback',
   }
 );
 
-// Logout
+// Logout logic
 router.get('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('/');
   });
 });
 
-// --- PAGE ROUTES ---
+// --- PAGE NAVIGATION ---
 router.get('/', (req, res) => {
   res.render('index');
 });
@@ -35,7 +35,8 @@ router.get('/dashboard', (req, res) => {
   res.render('dashboard', { user: req.user || {} });
 });
 
-// --- CREATION LOGIC ---
+// --- SITE CREATION LOGIC ---
+// Fixes "Error creating site" by properly parsing data
 router.post('/create', async (req, res) => {
   try {
     const { name, slug, description, businessType, themeChoice, heroHeadline, phone, address, menuJson } = req.body;
@@ -51,7 +52,7 @@ router.post('/create', async (req, res) => {
 
     const newRestaurant = new Restaurant({
       name,
-      // Fixed: cleaning the slug to prevent database errors
+      // Cleans the slug to ensure MongoDB doesn't reject it
       slug: (slug || name).toLowerCase().split(' ').join('-').replace(/[^\w-]+/g, ''),
       description,
       businessType,
@@ -64,11 +65,12 @@ router.post('/create', async (req, res) => {
     });
 
     await newRestaurant.save();
+    // Redirect to the newly created dynamic site
     res.redirect(`/${newRestaurant.slug}`);
   } catch (err) {
-    console.error("Detailed Save Error:", err);
+    console.error("Save Error:", err);
     if (err.code === 11000) {
-      return res.status(400).send("Error: This URL Slug is already taken. Try a different name.");
+      return res.status(400).send("This URL Slug is already taken. Try a different name.");
     }
     res.status(500).send("Error creating site. Please check the Render logs.");
   }

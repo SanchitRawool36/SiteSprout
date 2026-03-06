@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const RestaurantSchema = new mongoose.Schema({
-    ownerEmail: String,
     name: { type: String, required: true },
     slug: { type: String, unique: true, required: true },
     description: String,
-    businessType: { type: String, enum: ['Restaurant', 'Cafe', 'FastFood', 'QSR'] }, 
+    businessType: String,
     themeChoice: String,
-    hero: { headline: String, subheadline: String, imageUrl: String },
+    hero: { headline: String },
+    menu: { type: Array, default: [] }, // MUST be defined for the JSON builder
     phone: String,
     address: String,
-    themeColor: { type: String, default: '#0a63d3' }
+    ownerEmail: String
 });
 
 module.exports = mongoose.model('Restaurant', RestaurantSchema);
