@@ -8,7 +8,10 @@ const connectDB = async () => {
     console.log("MongoDB Atlas Connected for SiteSprout...");
   } catch (err) {
     console.error("Connection Error:", err.message);
-    process.exit(1); // Stop the app if connection fails
+    // Do not call process.exit() inside a serverless function import —
+    // allow the caller to handle transient connection failures.
+    // Return so imports won't forcefully terminate the runtime.
+    return;
   }
 };
 
