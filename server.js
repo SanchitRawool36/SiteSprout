@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const connectDB = require('./config/db');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const Restaurant = require('./models/Restaurant');
 const session = require('express-session');
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
     "default-src 'self'",
     "font-src 'self' data: https:",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "connect-src 'self' http://localhost:3000 ws:",
+    "connect-src 'self' https://sitesprout.onrender.com ws:",
     "img-src 'self' data:"
   ].join('; ');
   res.setHeader('Content-Security-Policy', csp);
@@ -37,6 +38,11 @@ app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// CORS: allow the Netlify frontend to call this backend (adjust origin as needed)
+app.use(cors({
+  origin: 'https://sitesprouts.netlify.app'
+}));
+
 // Session + Passport setup (requires GOOGLE_CLIENT_ID/SECRET in env)
 app.use(session({ secret: process.env.SESSION_SECRET || 'site-sprout-secret', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -49,7 +55,7 @@ passport.deserializeUser((obj, done) => done(null, obj));
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID',
   clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'YOUR_GOOGLE_CLIENT_SECRET',
-  callbackURL: process.env.GOOGLE_CALLBACK || 'http://localhost:3000/auth/google/callback'
+  callbackURL: process.env.GOOGLE_CALLBACK || 'https://sitesprout.onrender.com/auth/google/callback'
 }, (accessToken, refreshToken, profile, cb) => {
   // Minimal user object: include email if available
   const email = (profile.emails && profile.emails[0] && profile.emails[0].value) || null;
