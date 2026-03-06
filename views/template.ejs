@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= restaurant.name %></title>
-  <% if (restaurant.themeChoice === 'Cozy Cafe') { %>
+  <% if (restaurant.themeChoice === 'cafe') { %>
     <link rel="stylesheet" href="/themes/cafe.css">
-  <% } else if (restaurant.themeChoice === 'Elite Restro') { %>
+  <% } else if (restaurant.themeChoice === 'restro') { %>
     <link rel="stylesheet" href="/themes/restro.css">
-  <% } else if (restaurant.themeChoice === 'Quick Burger') { %>
+  <% } else if (restaurant.themeChoice === 'fastfood') { %>
     <link rel="stylesheet" href="/themes/fastfood.css">
   <% } %>
   <link rel="stylesheet" href="/css/style.css">
@@ -31,14 +31,14 @@
     </div>
   </header>
 
-  <% const themeType = restaurant.themeType || ''; %>
-  <section class="hero <%= themeType.replace(/\s+/g,'-').toLowerCase() %>" style="background-image:url('<%= (restaurant.hero && restaurant.hero.imageUrl) || restaurant.imageUrl || '/assets/hero-placeholder.jpg' %>');background-size:cover;background-position:center;">
+  <% const businessType = restaurant.businessType || ''; %>
+  <section class="hero <%= businessType.replace(/\s+/g,'-').toLowerCase() %>" style="background-image:url('<%= (restaurant.hero && restaurant.hero.imageUrl) || '/assets/hero-placeholder.jpg' %>');background-size:cover;background-position:center;">
     <div class="hero-overlay" style="background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.45));padding:6rem 0;display:flex;align-items:center;">
-      <div class="container" style="width:100%;<% if (themeType === 'Modern Cafe') { %>text-align:center;<% } else if (themeType === 'Luxury Restro') { %>text-align:left;max-width:900px;<% } else { %>text-align:center;<% } %>">
-        <h1 class="hero-title" style="margin:0;<% if (themeType === 'Modern Cafe') { %>font-size:3.25rem;color:#fff;font-weight:700;<% } else if (themeType === 'Luxury Restro') { %>font-size:3.5rem;color:#d4af37;font-family: 'Playfair Display', serif;<% } else { %>font-size:3rem;color:#fff;<% } %>">
-          <%= restaurant.heroHeadline || (restaurant.hero && restaurant.hero.headline) || 'Best in Goa' %>
+      <div class="container" style="width:100%;text-align:center;">
+        <h1 class="hero-title" style="margin:0;font-size:3rem;color:#fff;">
+          <%= (restaurant.hero && restaurant.hero.headline) || 'Welcome to our Restaurant' %>
         </h1>
-        <p class="hero-sub" style="margin-top:.5rem;color:rgba(255,255,255,0.9);<% if (themeType === 'Modern Cafe') { %>max-width:800px;margin:0 auto;<% } %>">
+        <p class="hero-sub" style="margin-top:.5rem;color:rgba(255,255,255,0.9);">
           <%= (restaurant.hero && restaurant.hero.subheadline) || restaurant.description || '' %>
         </p>
       </div>
@@ -78,17 +78,18 @@
       <% } %>
     </section>
 
+    <% if (restaurant.gallery && restaurant.gallery.length > 0) { %>
     <section class="gallery-section">
       <h2>Gallery</h2>
       <div class="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
-        <% const gallery = restaurant.gallery && restaurant.gallery.length ? restaurant.gallery : [restaurant.imageUrl, '/assets/food-placeholder.jpg', '/assets/food-placeholder.jpg']; %>
-        <% gallery.slice(0,8).forEach(img => { %>
+        <% restaurant.gallery.forEach(img => { %>
           <div class="gallery-item" style="height:180px;border-radius:8px;overflow:hidden;">
             <img src="<%= img %>" alt="photo" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
         <% }) %>
       </div>
     </section>
+    <% } %>
 
     <section id="contact" class="contact-section">
       <h2>Contact & Visit</h2>

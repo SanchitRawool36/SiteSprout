@@ -13,17 +13,98 @@
       <h1 class="admin-title">Create Your Restaurant Website</h1>
       <div class="admin-grid">
         <div class="form-column">
-          <form action="https://sitesprout.onrender.com/create" method="POST" class="admin-form" enctype="multipart/form-data">
+          <form action="/create" method="POST" class="admin-form" enctype="multipart/form-data">
             <input type="hidden" id="menuJson" name="menuJson">
             <div class="form-group">
               <label for="name">Restaurant Name</label>
               <input type="text" id="name" name="name" required placeholder="Taj Hotel">
+            </div>
+            <div class="form-group">
+              <label for="slug">URL Slug</label>
+              <input type="text" id="slug" name="slug">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="businessType">Business Type</label>
+              <select id="businessType" name="businessType">
+                <option value="Restaurant">Restaurant</option>
+                <option value="Cafe">Cafe</option>
+                <option value="FastFood">Fast Food</option>
+                <option value="QSR">QSR</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="themeChoice">Theme</label>
+              <select id="themeChoice" name="themeChoice">
+                <option value="restro">Restro</option>
+                <option value="cafe">Cafe</option>
+                <option value="fastfood">Fast Food</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="heroHeadline">Hero Headline</label>
+              <input type="text" id="heroHeadline" name="hero[headline]">
+            </div>
+            <div class="form-group">
+              <label for="heroSubheadline">Hero Subheadline</label>
+              <input type="text" id="heroSubheadline" name="hero[subheadline]">
+            </div>
+            <div class="form-group">
+              <label for="heroImage">Hero Image</label>
+              <input type="file" id="heroImage" name="heroImage">
+            </div>
+            <div class="form-group">
+              <label for="gallery">Gallery Images</label>
+              <input type="file" id="gallery" name="gallery" multiple>
+            </div>
+            <div class="form-group">
+              <label for="themeColor">Theme Color</label>
+              <input type="color" id="themeColor" name="themeColor" value="#333333">
+            </div>
+            <div class="form-group">
+              <label for="openingHours">Opening Hours</label>
+              <input type="text" id="openingHours" name="openingHours" placeholder="Mon–Sun 9:00am – 10:00pm">
+            </div>
+            <div class="form-group">
+              <label for="socialInstagram">Instagram URL</label>
+              <input type="url" id="socialInstagram" name="social[instagram]" placeholder="https://instagram.com/...">
+            </div>
+            <div class="form-group">
+              <label for="socialFacebook">Facebook URL</label>
+              <input type="url" id="socialFacebook" name="social[facebook]" placeholder="https://facebook.com/...">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address">
+            </div>
+
+            <div class="form-group">
+              <label>Menu</label>
+              <div id="categoriesContainer"></div>
             </div>
             <div class="form-actions">
               <button id="addCategoryBtn" type="button" class="btn ghost">+ Add Category</button>
               <button type="submit" class="btn cta" id="submitBtn">Create Website</button>
             </div>
           </form>
+        </div>
+        <div class="preview-column">
+          <div class="live-preview">
+            <div class="preview-header">
+              <h3 id="previewName">Your Restaurant</h3>
+            </div>
+            <div class="preview-content">
+              <p id="previewType">Type: Restaurant</p>
+              <p id="previewDescription">Short description will appear here.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

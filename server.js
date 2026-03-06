@@ -48,7 +48,7 @@ passport.deserializeUser((obj, done) => done(null, obj));
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://sitesprout.onrender.com/auth/google/callback'
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'https://sitesprout.onrender.com/auth/google/callback'
   }, (accessToken, refreshToken, profile, cb) => {
     const email = (profile.emails && profile.emails[0] && profile.emails[0].value) || null;
     const user = { id: profile.id, name: profile.displayName, email };

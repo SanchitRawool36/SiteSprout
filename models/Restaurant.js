@@ -6,10 +6,21 @@ const RestaurantSchema = new mongoose.Schema({
     description: String,
     businessType: String,
     themeChoice: String,
-    hero: { headline: String },
-    menu: { type: Array, default: [] }, // MUST be defined for the JSON builder
+    themeColor: { type: String, default: '#333' },
+    hero: {
+        headline: String,
+        subheadline: String,
+        imageUrl: String
+    },
+    menu: { type: Array, default: [] },
+    gallery: [String],
+    openingHours: String,
     phone: String,
     address: String,
+    social: {
+        instagram: String,
+        facebook: String
+    },
     ownerEmail: String
 });
 
