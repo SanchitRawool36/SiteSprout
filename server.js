@@ -23,12 +23,10 @@ app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// CORS: allow your Netlify frontend to call this Render backend
-app.use(cors({
-  origin: 'https://sitesprouts.netlify.app'
-}));
+// CORS setup for Netlify
+app.use(cors({ origin: 'https://sitesprouts.netlify.app' }));
 
-// Session + Passport setup
+// Session + Passport
 app.use(session({ 
   secret: process.env.SESSION_SECRET || 'site-sprout-secret', 
   resave: false, 
@@ -40,7 +38,7 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-// Google OAuth strategy
+// Google OAuth
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -51,27 +49,11 @@ passport.use(new GoogleStrategy({
   return cb(null, user);
 }));
 
-// Multer setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads')),
-  filename: (req, file, cb) => {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + unique + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage });
-
-// ROUTES
-const appRoutes = require('./appRoutes'); // Standardized import to fix Render crash
+// Standardized Routes Import - DO NOT USE require('./router')
+const appRoutes = require('./appRoutes'); 
 app.use('/', appRoutes);
 
-// Auth routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('/dashboard');
-});
-
-// Catch-all route for generated restaurant sites
+// Catch-all for Slugs
 app.get('/:slug', async (req, res) => {
   try {
     const restaurant = await Restaurant.findOne({ slug: req.params.slug });
