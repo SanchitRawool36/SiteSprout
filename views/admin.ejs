@@ -14,8 +14,9 @@
 
       <div class="admin-grid">
       <div class="form-column">
-        <form action="/create" method="POST" class="admin-form" enctype="multipart/form-data">
+        <form action="https://sitesprout.onrender.com/create" method="POST" class="admin-form" enctype="multipart/form-data">
           <input type="hidden" id="menuJson" name="menuJson">
+          
           <div class="form-group">
             <label for="name">Restaurant Name</label>
             <input type="text" id="name" name="name" required placeholder="Taj Hotel">
@@ -41,7 +42,6 @@
             </div>
           </div>
 
-          <!-- Brand -->
           <h2 class="subheading">Brand</h2>
           <div class="form-group">
             <label for="logo">Logo Upload</label>
@@ -53,7 +53,6 @@
             <textarea id="description" name="description" rows="4" placeholder="Tell your story..."></textarea>
           </div>
 
-          <!-- Hero -->
           <h2 class="subheading">Hero</h2>
           <div class="form-group">
             <label for="heroHeadline">Headline</label>
@@ -68,7 +67,6 @@
             <input type="file" id="heroImage" name="heroImage" accept="image/*">
           </div>
 
-          <!-- Details -->
           <h2 class="subheading">Details</h2>
           <div class="form-group">
             <label for="openingHours">Opening Hours</label>
@@ -101,15 +99,13 @@
             </select>
           </div>
 
-          <!-- Menu Builder -->
           <h2 class="subheading">Menu Builder</h2>
           <div id="categoriesContainer" class="categories-container">
-            <!-- JS will add category blocks here -->
-          </div>
+            </div>
 
           <div class="form-actions">
             <button id="addCategoryBtn" type="button" class="btn ghost">+ Add Category</button>
-            <button type="submit" class="btn cta">Create Website</button>
+            <button type="submit" class="btn cta" id="submitBtn">Create Website</button>
           </div>
         </form>
       </div>
@@ -132,6 +128,28 @@
       </aside>
     </div>
   </div>
+
+  <script>
+    // AUTO-SLUG GENERATOR
+    const nameInp = document.getElementById('name');
+    const slugInp = document.getElementById('slug');
+    
+    nameInp.addEventListener('input', () => {
+      const val = nameInp.value.toLowerCase()
+        .replace(/[^\w\s-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-')     // Replace spaces with -
+        .replace(/-+/g, '-');     // Remove double -
+      slugInp.value = val;
+    });
+
+    // FORM LOADING STATE
+    document.querySelector('.admin-form').addEventListener('submit', function() {
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = "Building Site... Please Wait";
+      btn.disabled = true;
+      btn.style.opacity = "0.7";
+    });
+  </script>
   <script src="/js/admin.js"></script>
 </body>
 </html>
