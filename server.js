@@ -1,4 +1,4 @@
-require('dotenv').config(); // Must be at the very top
+require('dotenv').config(); 
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -10,7 +10,7 @@ const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
 const Restaurant = require('./models/Restaurant');
 
 const app = express();
-const port = process.env.PORT || 3000; // Required for Render
+const port = process.env.PORT || 3000;
 
 // 1. Database Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -24,9 +24,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors({ origin: 'https://sitesprouts.netlify.app' })); //
 
-// 3. Session & Passport Config
+// 3. CORS - Trusting your Netlify URL
+app.use(cors({ 
+  origin: ['https://sitesprouts.netlify.app', 'https://sitesprout.onrender.com'],
+  credentials: true 
+}));
+
+// 4. Session & Passport Config
 app.use(session({
   secret: process.env.SESSION_SECRET || 'sitesprout_secret',
   resave: false,
@@ -39,11 +44,11 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-// 4. Google Auth Strategy
+// 5. Google Auth Strategy
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK || 'https://sitesprout.onrender.com/auth/google/callback'
+    callbackURL: 'https://sitesprout.onrender.com/auth/google/callback'
   }, (accessToken, refreshToken, profile, cb) => {
     const email = (profile.emails && profile.emails[0] && profile.emails[0].value) || null;
     const user = { id: profile.id, name: profile.displayName, email };
@@ -51,7 +56,7 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-// 5. Routes
+// 6. Routes
 const appRoutes = require('./appRoutes');
 app.use('/', appRoutes);
 
@@ -69,7 +74,7 @@ app.get('/:slug', async (req, res) => {
   }
 });
 
-// 6. Start Server
+// 7. Start Server
 app.listen(port, '0.0.0.0', () => {
   console.log(`🚀 Server is live on port ${port}`);
 });

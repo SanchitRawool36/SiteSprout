@@ -11,145 +11,23 @@
     <a class="back-home" href="/">← Back to Home</a>
     <div class="card">
       <h1 class="admin-title">Create Your Restaurant Website</h1>
-
       <div class="admin-grid">
-      <div class="form-column">
-        <form action="https://sitesprout.onrender.com/create" method="POST" class="admin-form" enctype="multipart/form-data">
-          <input type="hidden" id="menuJson" name="menuJson">
-          
-          <div class="form-group">
-            <label for="name">Restaurant Name</label>
-            <input type="text" id="name" name="name" required placeholder="Taj Hotel">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group" style="flex:1">
-              <label for="slug">Slug (URL)</label>
-              <input type="text" id="slug" name="slug" placeholder="my-restaurant">
-              <small>Optional — generated from name if left blank</small>
+        <div class="form-column">
+          <form action="https://sitesprout.onrender.com/create" method="POST" class="admin-form" enctype="multipart/form-data">
+            <input type="hidden" id="menuJson" name="menuJson">
+            <div class="form-group">
+              <label for="name">Restaurant Name</label>
+              <input type="text" id="name" name="name" required placeholder="Taj Hotel">
             </div>
-            <div class="form-group" style="width:120px;margin-left:1rem;">
-              <label for="themeColor">Theme</label>
-              <input type="color" id="themeColor" name="themeColor" value="#0a63d3">
+            <div class="form-actions">
+              <button id="addCategoryBtn" type="button" class="btn ghost">+ Add Category</button>
+              <button type="submit" class="btn cta" id="submitBtn">Create Website</button>
             </div>
-            <div class="form-group" style="width:180px;margin-left:1rem;">
-              <label for="businessType">Business Type</label>
-              <select id="businessType" name="businessType">
-                <option value="Restaurant" selected>Restaurant (Fine Dining)</option>
-                <option value="Cafe">Cafe</option>
-                <option value="FastFood">Fast Food</option>
-              </select>
-            </div>
-          </div>
-
-          <h2 class="subheading">Brand</h2>
-          <div class="form-group">
-            <label for="logo">Logo Upload</label>
-            <input type="file" id="logo" name="logo" accept="image/*">
-          </div>
-
-          <div class="form-group">
-            <label for="description">About Us (Story)</label>
-            <textarea id="description" name="description" rows="4" placeholder="Tell your story..."></textarea>
-          </div>
-
-          <h2 class="subheading">Hero</h2>
-          <div class="form-group">
-            <label for="heroHeadline">Headline</label>
-            <input type="text" id="heroHeadline" name="heroHeadline" placeholder="Best Pizza in Mumbai">
-          </div>
-          <div class="form-group">
-            <label for="heroSubheadline">Subheadline</label>
-            <input type="text" id="heroSubheadline" name="heroSubheadline" placeholder="We bake with love and fire">
-          </div>
-          <div class="form-group">
-            <label for="heroImage">Hero Image</label>
-            <input type="file" id="heroImage" name="heroImage" accept="image/*">
-          </div>
-
-          <h2 class="subheading">Details</h2>
-          <div class="form-group">
-            <label for="openingHours">Opening Hours</label>
-            <input type="text" id="openingHours" name="openingHours" placeholder="Mon–Sun 9:00am – 10:00pm">
-          </div>
-          <div class="form-group">
-            <label for="address">Full Address</label>
-            <input type="text" id="address" name="address" placeholder="123 Main St, City, Country">
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone" name="phone" placeholder="(+91) 12345 67890">
-          </div>
-
-          <div class="form-group">
-            <label for="instagram">Instagram URL</label>
-            <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/yourpage">
-          </div>
-          <div class="form-group">
-            <label for="facebook">Facebook URL</label>
-            <input type="url" id="facebook" name="facebook" placeholder="https://facebook.com/yourpage">
-          </div>
-
-          <div class="form-group">
-            <label for="themeChoice">Theme Selector</label>
-            <select id="themeChoice" name="themeChoice">
-              <option value="Cozy Cafe">Cozy Cafe</option>
-              <option value="Elite Restro">Elite Restro</option>
-              <option value="Quick Burger">Quick Burger</option>
-            </select>
-          </div>
-
-          <h2 class="subheading">Menu Builder</h2>
-          <div id="categoriesContainer" class="categories-container">
-            </div>
-
-          <div class="form-actions">
-            <button id="addCategoryBtn" type="button" class="btn ghost">+ Add Category</button>
-            <button type="submit" class="btn cta" id="submitBtn">Create Website</button>
-          </div>
-        </form>
-      </div>
-
-      <aside class="preview-column">
-        <div class="preview-pane" id="previewPane">
-          <header class="preview-header">
-            <h2 id="previewName">Your Restaurant</h2>
-            <p id="previewDescription">Short description will appear here.</p>
-            <p id="previewType" class="preview-type">Type: Restaurant</p>
-          </header>
-          <div class="preview-menu">
-            <h4>Menu</h4>
-            <ul id="previewMenuList">
-              <li>Item 1 — $9.99</li>
-              <li>Item 2 — $7.50</li>
-            </ul>
-          </div>
+          </form>
         </div>
-      </aside>
+      </div>
     </div>
   </div>
-
-  <script>
-    // AUTO-SLUG GENERATOR
-    const nameInp = document.getElementById('name');
-    const slugInp = document.getElementById('slug');
-    
-    nameInp.addEventListener('input', () => {
-      const val = nameInp.value.toLowerCase()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-')     // Replace spaces with -
-        .replace(/-+/g, '-');     // Remove double -
-      slugInp.value = val;
-    });
-
-    // FORM LOADING STATE
-    document.querySelector('.admin-form').addEventListener('submit', function() {
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = "Building Site... Please Wait";
-      btn.disabled = true;
-      btn.style.opacity = "0.7";
-    });
-  </script>
   <script src="/js/admin.js"></script>
 </body>
 </html>
