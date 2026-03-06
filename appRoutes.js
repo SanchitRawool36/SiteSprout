@@ -1,23 +1,41 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const Restaurant = require('./models/Restaurant');
 
-// Home Page
+// --- AUTH ROUTES ---
+// Starts the Google Login process
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Handles the return from Google
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('/dashboard');
+  }
+);
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('/');
+  });
+});
+
+// --- PAGE ROUTES ---
 router.get('/', (req, res) => {
   res.render('index');
 });
 
-// Admin Page
 router.get('/admin', (req, res) => {
   res.render('admin');
 });
 
-// Dashboard
 router.get('/dashboard', (req, res) => {
   res.render('dashboard', { user: req.user || {} });
 });
 
-// Creation Logic
+// --- CREATION LOGIC ---
 router.post('/create', async (req, res) => {
   try {
     const { name, slug, description, businessType, themeChoice, heroHeadline, phone, address, menuJson } = req.body;
@@ -33,7 +51,8 @@ router.post('/create', async (req, res) => {
 
     const newRestaurant = new Restaurant({
       name,
-      slug: slug || name.toLowerCase().split(' ').join('-').replace(/[^\w-]+/g, ''),
+      // Fixed: cleaning the slug to prevent database errors
+      slug: (slug || name).toLowerCase().split(' ').join('-').replace(/[^\w-]+/g, ''),
       description,
       businessType,
       themeChoice,
@@ -45,13 +64,13 @@ router.post('/create', async (req, res) => {
     });
 
     await newRestaurant.save();
-    res.redirect(`https://sitesprout.onrender.com/${newRestaurant.slug}`);
+    res.redirect(`/${newRestaurant.slug}`);
   } catch (err) {
-    console.error("Save Error:", err);
+    console.error("Detailed Save Error:", err);
     if (err.code === 11000) {
-      return res.status(400).send("Error: This URL Slug is already taken.");
+      return res.status(400).send("Error: This URL Slug is already taken. Try a different name.");
     }
-    res.status(500).send("Error creating site.");
+    res.status(500).send("Error creating site. Please check the Render logs.");
   }
 });
 
