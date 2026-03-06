@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Restaurant = require('./models/Restaurant');
 
-// Admin Builder Page
+// Admin Page
 router.get('/admin', (req, res) => {
   res.render('admin');
 });
 
-// User Dashboard
+// Dashboard
 router.get('/dashboard', (req, res) => {
   res.render('dashboard', { user: req.user || {} });
 });
 
-// Handle Restaurant Creation
+// Site Creation Submission
 router.post('/create', async (req, res) => {
   try {
     const { name, slug, description, businessType, themeChoice, heroHeadline, phone, address } = req.body;
