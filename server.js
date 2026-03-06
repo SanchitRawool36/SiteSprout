@@ -23,12 +23,10 @@ app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// CORS: allow your Netlify frontend to communicate with this Render backend
-app.use(cors({
-  origin: 'https://sitesprouts.netlify.app'
-}));
+// CORS for Netlify frontend
+app.use(cors({ origin: 'https://sitesprouts.netlify.app' }));
 
-// Session + Passport setup
+// Session & Passport
 app.use(session({ 
   secret: process.env.SESSION_SECRET || 'site-sprout-secret', 
   resave: false, 
@@ -40,7 +38,7 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-// Google OAuth strategy - Ensure these match your Google Cloud Console
+// Google Auth Strategy
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -51,11 +49,13 @@ passport.use(new GoogleStrategy({
   return cb(null, user);
 }));
 
-// Standardized Routes Import - Matches your 'appRoutes.js' filename
-const siteRoutes = require('./appRoutes'); 
-app.use('/', siteRoutes);
+// --- ROUTING FIX START ---
+// Pointing specifically to your appRoutes.js file
+const appRoutes = require('./appRoutes'); 
+app.use('/', appRoutes);
+// --- ROUTING FIX END ---
 
-// Catch-all route for generated restaurant sites
+// Catch-all for Slugs
 app.get('/:slug', async (req, res) => {
   try {
     const restaurant = await Restaurant.findOne({ slug: req.params.slug });
