@@ -1,5 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
+require('dotenv').config();
+const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const Restaurant = require('./models/Restaurant');
 const session = require('express-session');
@@ -12,7 +13,8 @@ const port = 3000;
 // Connect to MongoDB (make sure you have a MongoDB instance running)
 // Removed deprecated options `useNewUrlParser` and `useUnifiedTopology` —
 // modern MongoDB driver / mongoose handle these automatically.
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/siteSprout');
+// Connect to MongoDB using connectDB module
+connectDB();
 
 // Set a permissive Content Security Policy for development so fonts and
 // local assets can load. Adjust for production as needed.

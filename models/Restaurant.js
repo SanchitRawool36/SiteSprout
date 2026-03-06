@@ -1,48 +1,14 @@
 const mongoose = require('mongoose');
 
-const restaurantSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  slug: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  description: String,
-  themeColor: String,
-  businessType: {
-    type: String,
-    enum: ['Cafe', 'Restaurant', 'FastFood'],
-    default: 'Restaurant'
-  },
-  imageUrl: String,
-  logoUrl: String,
-  hero: {
-    headline: String,
-    subheadline: String,
-    imageUrl: String
-  },
-  themeChoice: String,
-  social: {
-    instagram: String,
-    facebook: String
-  },
-  openingHours: String,
-  address: String,
-  phone: String,
-  gallery: [String],
-  // Menu as categorized structure
-  menu: [{
-    category: String,
-    items: [{
-      name: String,
-      price: Number,
-      description: String
-    }]
-  }],
-  ownerEmail: String
+const RestaurantSchema = new mongoose.Schema({
+    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    name: String,
+    slug: { type: String, unique: true },
+    businessType: { type: String, enum: ['Cafe', 'Restaurant', 'QSR'] }, // Theme Logic
+    themeType: { type: String }, // e.g. 'Modern Cafe' or 'Luxury Restro'
+    heroHeadline: String,
+    menu: [{ item: String, price: Number, description: String }],
+    contact: { phone: String, address: String, instagram: String }
 });
 
-module.exports = mongoose.model('Restaurant', restaurantSchema);
+module.exports = mongoose.model('Restaurant', RestaurantSchema);
