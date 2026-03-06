@@ -2,12 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Restaurant = require('./models/Restaurant');
 
-// Admin Page
+// Admin Builder Page
 router.get('/admin', (req, res) => {
   res.render('admin');
 });
 
-// Create Site Logic
+// User Dashboard
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard', { user: req.user || {} });
+});
+
+// Handle Restaurant Creation
 router.post('/create', async (req, res) => {
   try {
     const { name, slug, description, businessType, themeChoice, heroHeadline, phone, address } = req.body;
@@ -27,8 +32,8 @@ router.post('/create', async (req, res) => {
     await newRestaurant.save();
     res.redirect(`/${newRestaurant.slug}`);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Error: Ensure the Slug is unique.");
+    console.error("Creation Error:", err);
+    res.status(500).send("Error creating site. Ensure the URL slug is unique.");
   }
 });
 
