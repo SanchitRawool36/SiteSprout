@@ -1,34 +1,42 @@
 const express = require('express');
-const router = express.Router();
-const Restaurant = require('./models/Restaurant');
+const path = require('path');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+require('dotenv').config();
 
-router.get('/admin', (req, res) => {
-  res.render('admin');
+const app = express();
+const port = process.env.PORT || 3000;
+
+// 1. Database Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB Connected successfully'))
+  .catch(err => console.log('❌ DB Connection Error:', err));
+
+// 2. Middleware & View Engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+
+// 3. Session & Passport (Required for Google Login)
+app.use(session({
+  secret: 'sitesprout_secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// 4. Import and use your Routes
+const appRoutes = require('./appRoutes');
+app.use('/', appRoutes);
+
+// 5. Start Server
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Server is live on port ${port}`);
 });
-
-router.get('/dashboard', (req, res) => {
-  res.render('dashboard', { user: req.user || {} });
-});
-
-router.post('/create', async (req, res) => {
-  try {
-    const { name, slug, description, businessType, themeChoice, heroHeadline, phone, address } = req.body;
-    const newRestaurant = new Restaurant({
-      name,
-      slug: slug || name.toLowerCase().split(' ').join('-'),
-      description,
-      businessType,
-      themeChoice,
-      hero: { headline: heroHeadline },
-      phone,
-      address,
-      ownerEmail: req.user ? req.user.email : null
-    });
-    await newRestaurant.save();
-    res.redirect(`/${newRestaurant.slug}`);
-  } catch (err) {
-    res.status(500).send("Error creating site. Ensure the slug is unique.");
-  }
-});
-
-module.exports = router;
