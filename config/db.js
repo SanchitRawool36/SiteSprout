@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
-require('dotenv').config(); // Loads your keys from a hidden file
-
-const MONGO_URI = process.env.MONGO_URI;
+require('dotenv').config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
-    console.log("Database connected successfully to Atlas!");
+    // Uses the URI from your .env file
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Atlas Connected for SiteSprout...");
   } catch (err) {
-    console.error("Database connection failed:", err);
-    process.exit(1);
+    console.error("Connection Error:", err.message);
+    process.exit(1); // Stop the app if connection fails
   }
 };
 
