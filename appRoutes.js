@@ -94,8 +94,8 @@ router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
       themeChoice,
       themeColor,
       hero: {
-          headline: hero.headline,
-          subheadline: hero.subheadline,
+          headline: hero ? hero.headline : '',
+          subheadline: hero ? hero.subheadline : '',
           imageUrl: heroImageUrl
       },
       menu: parsedMenu,
