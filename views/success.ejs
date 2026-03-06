@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site Created — SiteSprout</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard">
+  <div class="container" style="max-width:860px;margin:4rem auto;">
+    <div class="card card-glass" style="padding:1.5rem;">
+      <h1>Success — Your site is live</h1>
+      <p class="muted">Public URL</p>
+      <div style="display:flex;gap:0.75rem;align-items:center;margin-top:0.5rem;">
+        <input readonly style="flex:1;padding:0.6rem;border-radius:8px;border:1px solid rgba(16,24,40,0.06);background:rgba(255,255,255,0.9)" value="<%= url %>">
+        <a class="btn cta" href="<%= url %>">Open Site</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

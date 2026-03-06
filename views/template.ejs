@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= restaurant.name %></title>
+  <% if (restaurant.themeChoice === 'Cozy Cafe') { %>
+    <link rel="stylesheet" href="/themes/cafe.css">
+  <% } else if (restaurant.themeChoice === 'Elite Restro') { %>
+    <link rel="stylesheet" href="/themes/restro.css">
+  <% } else if (restaurant.themeChoice === 'Quick Burger') { %>
+    <link rel="stylesheet" href="/themes/fastfood.css">
+  <% } %>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root { --theme-color: <%= restaurant.themeColor || '#333' %>; }
+    .site-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem}
+    .container{max-width:1100px;margin:0 auto;padding:0 1rem}
+    .hero-overlay{width:100%;}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
+      <div class="brand"><a href="/" class="site-logo"><%= restaurant.name %></a></div>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="background-image:url('<%= (restaurant.hero && restaurant.hero.imageUrl) || restaurant.imageUrl || '/assets/hero-placeholder.jpg' %>');background-size:cover;background-position:center;">
+    <div class="hero-overlay" style="background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.45));padding:6rem 0;display:flex;align-items:center;">
+      <div class="container" style="width:100%;text-align:center;">
+        <h1 class="hero-title" style="margin:0;font-size:3rem;color:#fff;">
+          <%= (restaurant.hero && restaurant.hero.headline) || 'Best in Goa' %>
+        </h1>
+        <p class="hero-sub" style="margin-top:.5rem;color:rgba(255,255,255,0.9);">
+          <%= (restaurant.hero && restaurant.hero.subheadline) || restaurant.description || '' %>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="about" class="about-section">
+      <h2>About Us</h2>
+      <p><%= restaurant.description || 'Our story will appear here.' %></p>
+    </section>
+
+    <section id="menu" class="menu-section">
+      <h2>Menu</h2>
+      <% if (restaurant.menu && restaurant.menu.length) { %>
+        <% restaurant.menu.forEach(function(cat){ %>
+          <div class="menu-category">
+            <h3><%= cat.category || 'Menu' %></h3>
+            <% if (cat.items && cat.items.length) { %>
+              <div class="menu-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
+              <% cat.items.forEach(function(it){ %>
+                <div class="menu-item" style="padding:1rem;border-radius:6px;border:1px solid rgba(0,0,0,0.04);">
+                  <div class="title" style="display:flex;justify-content:space-between;align-items:baseline;"><strong><%= it.name %></strong><span><%= it.price ? ('$' + Number(it.price).toFixed(2)) : '' %></span></div>
+                  <% if (it.description) { %>
+                    <div class="desc" style="color:#666;margin-top:.5rem;"><%= it.description %></div>
+                  <% } %>
+                </div>
+              <% }); %>
+              </div>
+            <% } else { %>
+              <p class="muted">No items in this category yet.</p>
+            <% } %>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No menu available yet.</p>
+      <% } %>
+    </section>
+
+    <section class="gallery-section">
+      <h2>Gallery</h2>
+      <div class="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+        <% const gallery = restaurant.gallery && restaurant.gallery.length ? restaurant.gallery : [restaurant.imageUrl, '/assets/food-placeholder.jpg', '/assets/food-placeholder.jpg']; %>
+        <% gallery.slice(0,8).forEach(img => { %>
+          <div class="gallery-item" style="height:180px;border-radius:8px;overflow:hidden;">
+            <img src="<%= img %>" alt="photo" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <h2>Contact & Visit</h2>
+      <p>Opening Hours: <strong><%= restaurant.openingHours || 'Mon–Sun 9:00am – 10:00pm' %></strong></p>
+      <p>Phone: <strong><%= restaurant.phone || 'N/A' %></strong></p>
+      <p>Address: <% if (restaurant.address) { %><a target="_blank" href="https://www.google.com/maps/search/<%= encodeURIComponent(restaurant.address) %>"><%= restaurant.address %></a><% } else { %>Not provided<% } %></p>
+      <div class="socials">
+        <% if (restaurant.social && restaurant.social.instagram) { %>
+          <a href="<%= restaurant.social.instagram %>" target="_blank">Instagram</a>
+        <% } %>
+        <% if (restaurant.social && restaurant.social.facebook) { %>
+          <% if (restaurant.social && restaurant.social.instagram) { %> &nbsp;|&nbsp; <% } %>
+          <a href="<%= restaurant.social.facebook %>" target="_blank">Facebook</a>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="padding:2rem;text-align:center;background:#f8f8f8;margin-top:2rem;">
+    <div>&copy; <%= new Date().getFullYear() %> <%= restaurant.name %></div>
+  </footer>
+</body>
+</html>
