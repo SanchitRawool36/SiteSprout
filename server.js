@@ -79,6 +79,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
+// Try to load external route definitions if present (safe on case-sensitive filesystems)
+try {
+  const appRoutes = require('./appRoutes');
+  // If the module exports a router or a function, mount it.
+  if (appRoutes && typeof appRoutes === 'function') {
+    app.use(appRoutes);
+  } else if (appRoutes && appRoutes.router) {
+    app.use(appRoutes.router);
+  }
+} catch (err) {
+  // Missing file is fine — continue without throwing so deployments on Linux won't fail.
+  console.warn('Optional appRoutes not found, continuing without it.');
+}
+
 app.get('/admin', (req, res) => {
   res.render('admin');
 });
