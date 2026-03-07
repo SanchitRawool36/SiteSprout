@@ -25,9 +25,22 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:0.5rem;justify-content:center;align-items:flex-end;">
             <a class="btn cta" href="/admin?slug=<%= restaurant.slug %>">Edit Site</a>
+            <button id="deleteBtn" class="btn danger">Delete Site</button>
             <div class="analytics card-glass" style="padding:0.5rem 0.75rem;text-align:left;width:100%;">
               <strong style="display:block">Analytics</strong>
               <small class="muted">Total Visits: 0</small>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this site? This action cannot be undone.</p>
+            <div class="modal-actions">
+              <button id="cancelDelete" class="btn">Cancel</button>
+              <a href="/delete/<%= restaurant._id %>" class="btn danger">Confirm Delete</a>
             </div>
           </div>
         </div>

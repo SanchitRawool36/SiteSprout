@@ -20,4 +20,26 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
   }
+
+  // Delete modal logic
+  const deleteBtn = document.getElementById('deleteBtn');
+  const deleteModal = document.getElementById('deleteModal');
+  const cancelDeleteBtn = document.getElementById('cancelDelete');
+
+  if (deleteBtn && deleteModal && cancelDeleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      deleteModal.style.display = 'flex';
+    });
+
+    cancelDeleteBtn.addEventListener('click', () => {
+      deleteModal.style.display = 'none';
+    });
+
+    // Also hide modal if user clicks outside of the modal content
+    window.addEventListener('click', (event) => {
+      if (event.target == deleteModal) {
+        deleteModal.style.display = 'none';
+      }
+    });
+  }
 });

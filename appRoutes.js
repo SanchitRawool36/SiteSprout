@@ -4,6 +4,7 @@ const passport = require('passport');
 const Restaurant = require('./models/Restaurant');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -40,8 +41,23 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/admin', (req, res) => {
-  res.render('admin');
+
+router.get('/admin', async (req, res) => {
+  try {
+    const { slug } = req.query;
+    let restaurant = null;
+    if (slug) {
+      restaurant = await Restaurant.findOne({ slug });
+      if (!restaurant) {
+        // Optional: handle case where a slug is provided but no restaurant is found
+        return res.status(404).send('Restaurant not found');
+      }
+    }
+    res.render('admin', { restaurant });
+  } catch (error) {
+    console.error("Admin route error:", error);
+    res.status(500).send("Server Error");
+  }
 });
 
 router.get('/dashboard', async (req, res) => {
@@ -114,6 +130,132 @@ router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
     if (err.code === 11000) {
       return res.status(400).send("This URL Slug is already taken.");
     }
+    res.status(500).send("Server Error: " + err.message);
+  }
+});
+
+// --- SITE UPDATE LOGIC ---
+router.post('/update', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'gallery', maxCount: 8 }]), async (req, res) => {
+  try {
+    const { restaurantId, name, slug, description, businessType, themeChoice, themeColor, hero, phone, address, menuJson, openingHours, social } = req.body;
+
+    if (!restaurantId) {
+      return res.status(400).send("Error: Restaurant ID is missing.");
+    }
+
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).send("Restaurant not found.");
+    }
+
+    // Basic fields
+    restaurant.name = name;
+    restaurant.slug = (slug || name).toString().toLowerCase().split(' ').join('-').replace(/[^\w-]+/g, '');
+    restaurant.description = description;
+    restaurant.businessType = businessType;
+    restaurant.themeChoice = themeChoice;
+    restaurant.themeColor = themeColor;
+    restaurant.openingHours = openingHours;
+    restaurant.phone = phone;
+    restaurant.address = address;
+    
+    if (social) {
+      restaurant.social = {
+        instagram: social.instagram,
+        facebook: social.facebook
+      };
+    }
+
+    if (hero) {
+        restaurant.hero.headline = hero.headline;
+        restaurant.hero.subheadline = hero.subheadline;
+    }
+
+    // Image fields
+    if (req.files['heroImage']) {
+      restaurant.hero.imageUrl = '/' + req.files['heroImage'][0].path.replace(/\\/g, "/");
+    }
+    if (req.files['gallery'] && req.files['gallery'].length > 0) {
+      const newImageUrls = req.files['gallery'].map(file => '/' + file.path.replace(/\\/g, "/"));
+      restaurant.gallery = [...restaurant.gallery, ...newImageUrls];
+    }
+    
+    // Handle removed images
+    if (req.body.removedImages) {
+      const imagesToRemove = req.body.removedImages.split(',');
+      restaurant.gallery = restaurant.gallery.filter(img => !imagesToRemove.includes(img));
+      
+      // Optional: Delete files from server
+      imagesToRemove.forEach(imgUrl => {
+        if (imgUrl) {
+          const imagePath = path.join(__dirname, '..', imgUrl);
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.error(`Failed to delete image: ${imagePath}`, err);
+            }
+          });
+        }
+      });
+    }
+
+    // Menu
+    if (menuJson) {
+      try {
+        restaurant.menu = JSON.parse(menuJson);
+      } catch (e) {
+        console.error("Menu parse error during update:", e);
+      }
+    }
+
+    await restaurant.save();
+    res.redirect(`/${restaurant.slug}`);
+
+  } catch (err) {
+    console.error("Update Error Details:", err);
+    if (err.code === 11000) {
+      return res.status(400).send("This URL Slug is already taken.");
+    }
+    res.status(500).send("Server Error: " + err.message);
+  }
+});
+
+// --- SITE DELETE LOGIC ---
+router.get('/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const restaurant = await Restaurant.findById(id);
+
+    if (!restaurant) {
+      return res.status(404).send('Restaurant not found');
+    }
+
+    // Delete associated images
+    const imagesToDelete = [];
+    if (restaurant.hero && restaurant.hero.imageUrl) {
+      imagesToDelete.push(restaurant.hero.imageUrl);
+    }
+    if (restaurant.gallery && restaurant.gallery.length > 0) {
+      imagesToDelete.push(...restaurant.gallery);
+    }
+
+    imagesToDelete.forEach(imgUrl => {
+      if (imgUrl) {
+        const imagePath = path.join(__dirname, '..', imgUrl);
+        if (fs.existsSync(imagePath)) {
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.error(`Failed to delete image: ${imagePath}`, err);
+            }
+          });
+        }
+      }
+    });
+
+    await Restaurant.findByIdAndDelete(id);
+
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.error("Delete Error Details:", err);
     res.status(500).send("Server Error: " + err.message);
   }
 });

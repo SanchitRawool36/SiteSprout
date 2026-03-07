@@ -101,9 +101,54 @@
   }
 
   // Optional: initialize with one category
-  if(categoriesContainer && categoriesContainer.children.length===0){
-    const cb = createCategoryBlock('Mains');
-    categoriesContainer.appendChild(cb);
-    cb.querySelector('.add-item').click();
+  function initializeMenu() {
+    if (typeof rawMenuData !== 'undefined' && rawMenuData.length > 0) {
+      categoriesContainer.innerHTML = ''; // Clear any existing content
+      rawMenuData.forEach(catData => {
+        const cb = createCategoryBlock(catData.category);
+        categoriesContainer.appendChild(cb);
+        if (catData.items && catData.items.length > 0) {
+          const itemsWrap = cb.querySelector('.items-wrap');
+          catData.items.forEach(itemData => {
+            const itemRow = createItemRow(itemData.name, itemData.price);
+            // Note: The original 'createItemRow' doesn't handle description.
+            // You might want to enhance it to set the description value as well.
+            const descInput = itemRow.querySelector('.item-desc');
+            if (descInput && itemData.description) {
+              descInput.value = itemData.description;
+            }
+            itemsWrap.appendChild(itemRow);
+          });
+        }
+      });
+    } else if (categoriesContainer.children.length === 0) {
+      const cb = createCategoryBlock('Mains');
+      categoriesContainer.appendChild(cb);
+      cb.querySelector('.add-item').click();
+    }
   }
+
+  if (categoriesContainer) {
+    initializeMenu();
+  }
+
+  // Image removal logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const removedImagesInput = document.getElementById('removedImages');
+    const removeImageBtns = document.querySelectorAll('.remove-image');
+    let removedImages = [];
+
+    removeImageBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const imageUrl = btn.dataset.imageUrl;
+        const container = btn.closest('.gallery-image-container');
+        if (imageUrl && container) {
+          container.style.display = 'none';
+          removedImages.push(imageUrl);
+          removedImagesInput.value = removedImages.join(',');
+        }
+      });
+    });
+  });
+
 })();

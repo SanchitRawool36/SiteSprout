@@ -10,47 +10,50 @@
   <div class="container admin-container">
     <a class="back-home" href="/">← Back to Home</a>
     <div class="card">
-      <h1 class="admin-title">Create Your Restaurant Website</h1>
+      <h1 class="admin-title"><%= restaurant ? 'Edit Your Restaurant' : 'Create Your Restaurant Website' %></h1>
       <div class="admin-grid">
         <div class="form-column">
-          <form action="/create" method="POST" class="admin-form" enctype="multipart/form-data">
+          <form action="<%= restaurant ? '/update' : '/create' %>" method="POST" class="admin-form" enctype="multipart/form-data">
             <input type="hidden" id="menuJson" name="menuJson">
+            <% if (restaurant) { %>
+              <input type="hidden" name="restaurantId" value="<%= restaurant._id %>">
+            <% } %>
             <div class="form-group">
               <label for="name">Restaurant Name</label>
-              <input type="text" id="name" name="name" required placeholder="Taj Hotel">
+              <input type="text" id="name" name="name" required placeholder="Taj Hotel" value="<%= restaurant ? restaurant.name : '' %>">
             </div>
             <div class="form-group">
               <label for="slug">URL Slug</label>
-              <input type="text" id="slug" name="slug">
+              <input type="text" id="slug" name="slug" value="<%= restaurant ? restaurant.slug : '' %>">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea id="description" name="description" rows="3"></textarea>
+              <textarea id="description" name="description" rows="3"><%= restaurant ? restaurant.description : '' %></textarea>
             </div>
             <div class="form-group">
               <label for="businessType">Business Type</label>
               <select id="businessType" name="businessType">
-                <option value="Restaurant">Restaurant</option>
-                <option value="Cafe">Cafe</option>
-                <option value="FastFood">Fast Food</option>
-                <option value="QSR">QSR</option>
+                <option value="Restaurant" <%= restaurant && restaurant.businessType === 'Restaurant' ? 'selected' : '' %>>Restaurant</option>
+                <option value="Cafe" <%= restaurant && restaurant.businessType === 'Cafe' ? 'selected' : '' %>>Cafe</option>
+                <option value="FastFood" <%= restaurant && restaurant.businessType === 'FastFood' ? 'selected' : '' %>>Fast Food</option>
+                <option value="QSR" <%= restaurant && restaurant.businessType === 'QSR' ? 'selected' : '' %>>QSR</option>
               </select>
             </div>
             <div class="form-group">
               <label for="themeChoice">Theme</label>
               <select id="themeChoice" name="themeChoice">
-                <option value="restro">Restro</option>
-                <option value="cafe">Cafe</option>
-                <option value="fastfood">Fast Food</option>
+                <option value="restro" <%= restaurant && restaurant.themeChoice === 'restro' ? 'selected' : '' %>>Restro</option>
+                <option value="cafe" <%= restaurant && restaurant.themeChoice === 'cafe' ? 'selected' : '' %>>Cafe</option>
+                <option value="fastfood" <%= restaurant && restaurant.themeChoice === 'fastfood' ? 'selected' : '' %>>Fast Food</option>
               </select>
             </div>
             <div class="form-group">
               <label for="heroHeadline">Hero Headline</label>
-              <input type="text" id="heroHeadline" name="hero[headline]">
+              <input type="text" id="heroHeadline" name="hero[headline]" value="<%= restaurant && restaurant.hero ? restaurant.hero.headline : '' %>">
             </div>
             <div class="form-group">
               <label for="heroSubheadline">Hero Subheadline</label>
-              <input type="text" id="heroSubheadline" name="hero[subheadline]">
+              <input type="text" id="heroSubheadline" name="hero[subheadline]" value="<%= restaurant && restaurant.hero ? restaurant.hero.subheadline : '' %>">
             </div>
             <div class="form-group">
               <label for="heroImage">Hero Image</label>
@@ -60,29 +63,43 @@
               <label for="gallery">Gallery Images</label>
               <input type="file" id="gallery" name="gallery" multiple>
             </div>
+            <% if (restaurant && restaurant.gallery && restaurant.gallery.length > 0) { %>
+              <div class="form-group">
+                <label>Current Gallery</label>
+                <div class="gallery-preview">
+                  <% restaurant.gallery.forEach(img => { %>
+                    <div class="gallery-image-container">
+                      <img src="<%= img %>" alt="Gallery Image" class="gallery-thumb">
+                      <button type="button" class="btn remove-image" data-image-url="<%= img %>">Remove</button>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            <% } %>
+            <input type="hidden" name="removedImages" id="removedImages">
             <div class="form-group">
               <label for="themeColor">Theme Color</label>
-              <input type="color" id="themeColor" name="themeColor" value="#333333">
+              <input type="color" id="themeColor" name="themeColor" value="<%= restaurant ? restaurant.themeColor : '#333333' %>">
             </div>
             <div class="form-group">
               <label for="openingHours">Opening Hours</label>
-              <input type="text" id="openingHours" name="openingHours" placeholder="Mon–Sun 9:00am – 10:00pm">
+              <input type="text" id="openingHours" name="openingHours" placeholder="Mon–Sun 9:00am – 10:00pm" value="<%= restaurant ? restaurant.openingHours : '' %>">
             </div>
             <div class="form-group">
               <label for="socialInstagram">Instagram URL</label>
-              <input type="url" id="socialInstagram" name="social[instagram]" placeholder="https://instagram.com/...">
+              <input type="url" id="socialInstagram" name="social[instagram]" placeholder="https://instagram.com/..." value="<%= restaurant && restaurant.social ? restaurant.social.instagram : '' %>">
             </div>
             <div class="form-group">
               <label for="socialFacebook">Facebook URL</label>
-              <input type="url" id="socialFacebook" name="social[facebook]" placeholder="https://facebook.com/...">
+              <input type="url" id="socialFacebook" name="social[facebook]" placeholder="https://facebook.com/..." value="<%= restaurant && restaurant.social ? restaurant.social.facebook : '' %>">
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone">
+              <.input type="tel" id="phone" name="phone" value="<%= restaurant ? restaurant.phone : '' %>">
             </div>
             <div class="form-group">
               <label for="address">Address</label>
-              <input type="text" id="address" name="address">
+              <input type="text" id="address" name="address" value="<%= restaurant ? restaurant.address : '' %>">
             </div>
 
             <div class="form-group">
@@ -91,7 +108,7 @@
             </div>
             <div class="form-actions">
               <button id="addCategoryBtn" type="button" class="btn ghost">+ Add Category</button>
-              <button type="submit" class="btn cta" id="submitBtn">Create Website</button>
+              <button type="submit" class="btn cta" id="submitBtn"><%= restaurant ? 'Update Website' : 'Create Website' %></button>
             </div>
           </form>
         </div>
@@ -109,6 +126,9 @@
       </div>
     </div>
   </div>
+  <script>
+    const rawMenuData = <%- restaurant && restaurant.menu ? JSON.stringify(restaurant.menu) : '[]' %>;
+  </script>
   <script src="/js/admin.js"></script>
 </body>
 </html>
