@@ -74,7 +74,7 @@ router.get('/dashboard', async (req, res) => {
 });
 
 // --- SITE CREATION LOGIC ---
-router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'gallery', maxCount: 8 }]), async (req, res) => {
+router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'gallery', maxCount: 8 }, { name: 'logo', maxCount: 1 }]), async (req, res) => {
   try {
     // 1. Log the data to see exactly what Render is receiving
     console.log("Data received from form:", req.body);
@@ -101,6 +101,7 @@ router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
     
     const heroImageUrl = req.files['heroImage'] ? '/' + req.files['heroImage'][0].path.replace(/\\/g, "/") : '';
     const galleryImageUrls = req.files['gallery'] ? req.files['gallery'].map(file => '/' + file.path.replace(/\\/g, "/")) : [];
+    const logoUrl = req.files['logo'] ? '/' + req.files['logo'][0].path.replace(/\\/g, "/") : '';
 
     const newRestaurant = new Restaurant({
       name,
@@ -114,6 +115,7 @@ router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
           subheadline: hero ? hero.subheadline : '',
           imageUrl: heroImageUrl
       },
+      logoUrl,
       menu: parsedMenu,
       gallery: galleryImageUrls,
       openingHours,
@@ -135,7 +137,7 @@ router.post('/create', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
 });
 
 // --- SITE UPDATE LOGIC ---
-router.post('/update', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'gallery', maxCount: 8 }]), async (req, res) => {
+router.post('/update', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'gallery', maxCount: 8 }, { name: 'logo', maxCount: 1 }]), async (req, res) => {
   try {
     const { restaurantId, name, slug, description, businessType, themeChoice, themeColor, hero, phone, address, menuJson, openingHours, social } = req.body;
 
@@ -174,6 +176,9 @@ router.post('/update', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name
     // Image fields
     if (req.files['heroImage']) {
       restaurant.hero.imageUrl = '/' + req.files['heroImage'][0].path.replace(/\\/g, "/");
+    }
+    if (req.files['logo']) {
+      restaurant.logoUrl = '/' + req.files['logo'][0].path.replace(/\\/g, "/");
     }
     if (req.files['gallery'] && req.files['gallery'].length > 0) {
       const newImageUrls = req.files['gallery'].map(file => '/' + file.path.replace(/\\/g, "/"));

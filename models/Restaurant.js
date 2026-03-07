@@ -12,6 +12,7 @@ const RestaurantSchema = new mongoose.Schema({
         subheadline: String,
         imageUrl: String
     },
+    logoUrl: String,
     menu: { type: Array, default: [] },
     gallery: [String],
     openingHours: String,

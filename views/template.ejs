@@ -22,7 +22,15 @@
 <body>
   <header class="site-header">
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
-      <div class="brand"><a href="/" class="site-logo"><%= restaurant.name %></a></div>
+      <div class="brand">
+        <a href="/" class="site-logo">
+          <% if (restaurant.logoUrl) { %>
+            <img src="<%= restaurant.logoUrl %>" alt="<%= restaurant.name %> Logo" style="max-height: 50px;">
+          <% } else { %>
+            <%= restaurant.name %>
+          <% } %>
+        </a>
+      </div>
       <nav class="main-nav">
         <a href="/">Home</a>
         <a href="#menu">Menu</a>
