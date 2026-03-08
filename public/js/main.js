@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+"document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
+                const offsetTop = targetElement.offsetTop - 80;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Close mobile menu if open
-            if (navLinks.classList.contains('active')) {
+            if (navLinks && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 mobileMenuBtn.classList.remove('active');
             }
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
     themeCards.forEach(card => {
         card.addEventListener('click', function() {
             const theme = this.dataset.theme;
-            // You can add logic here to preview the theme or redirect to demo
             console.log('Selected theme:', theme);
         });
     });
@@ -60,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Simulate form submission
             setTimeout(() => {
-                alert('Thank you! We\'ll contact you soon to set up your free trial.');
+                alert('Thank you! We\\'ll contact you soon to set up your free trial.');
                 
                 // Reset form
                 this.reset();
@@ -131,13 +130,15 @@ document.addEventListener('DOMContentLoaded', function() {
     themeCards.forEach(card => {
         const preview = card.querySelector('.theme-preview');
         
-        card.addEventListener('mouseenter', function() {
-            preview.style.transform = 'scale(1.05)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            preview.style.transform = 'scale(1)';
-        });
+        if (preview) {
+            card.addEventListener('mouseenter', function() {
+                preview.style.transform = 'scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                preview.style.transform = 'scale(1)';
+            });
+        }
     });
     
     // Add ripple effect to buttons
@@ -189,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     images.forEach(img => imageObserver.observe(img));
     
-    // Add CSS for ripple effect
+    // Add CSS for ripple effect and mobile menu
     const style = document.createElement('style');
     style.textContent = `
         .btn {
@@ -221,9 +222,9 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             background: rgba(255, 255, 255, 0.98);
             flex-direction: column;
-            padding: var(--space-4);
-            box-shadow: var(--shadow-lg);
-            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            padding: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            border-radius: 0 0 0.75rem 0.75rem;
         }
         
         .mobile-menu-btn.active span:nth-child(1) {
@@ -440,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <h4>Exquisite Culinary Experience</h4>
                                 <p>{'Fine dining with exceptional service and attention to detail.'}</p>
                                 <div class="preview-menu-section">
-                                    <h5>Chef\'s Selection</h5>
+                                    <h5>Chef\\'s Selection</h5>
                                     <div class="menu-items">
                                         <div class="menu-item">
                                             <span>Wagyu Beef</span>
@@ -670,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="theme-preview">
                             <div class="preview-header traditional-header">
                                 <div class="preview-nav">
-                                    <div class="preview-logo">Nonna\'s Kitchen</div>
+                                    <div class="preview-logo">Nonna\\'s Kitchen</div>
                                     <div class="preview-menu">
                                         <span>Menu</span>
                                         <span>Story</span>
