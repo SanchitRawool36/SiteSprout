@@ -1,4 +1,4 @@
-"document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
@@ -254,7 +254,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RestaurantBuilder - Create Beautiful Restaurant Websites in Minutes</title>
+    <title>SiteSprout - Create Beautiful Restaurant Websites in Minutes</title>
     <meta name="description" content="Build stunning restaurant websites with our easy-to-use platform. Choose from professional themes, manage menus, and get online in minutes.">
     
     <!-- Fonts -->
@@ -274,7 +274,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <h1>RestaurantBuilder</h1>
+                <h1>SiteSprout</h1>
             </div>
             <div class="nav-links">
                 <a href="#themes" class="nav-link">Themes</a>
@@ -802,7 +802,7 @@
                 <div class="contact-info">
                     <h2>Ready to Get Started?</h2>
                     <p>
-                        Join thousands of restaurants already using RestaurantBuilder to create 
+                        Join thousands of restaurants already using SiteSprout to create 
                         beautiful websites and grow their business online.
                     </p>
                     
@@ -879,7 +879,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>RestaurantBuilder</h3>
+                    <h3>SiteSprout</h3>
                     <p>
                         The easiest way to create professional restaurant websites. 
                         Trusted by thousands of restaurants worldwide.
@@ -912,7 +912,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 RestaurantBuilder. All rights reserved.</p>
+                <p>&copy; 2024 SiteSprout. All rights reserved.</p>
             </div>
         </div>
     </footer>
