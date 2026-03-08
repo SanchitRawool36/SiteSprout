@@ -1,270 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SiteSprout - Build Your Professional Website in Minutes</title>
-  <meta name="description" content="Create a stunning website with our easy-to-use platform. No coding required. Get online in minutes with professional templates and features.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/mobile.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RestaurantBuilder - Create Beautiful Restaurant Websites</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <header class="site-header">
-    <nav class="nav-container">
-      <div class="nav-brand">
-        <a href="/" class="logo">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-          </svg>
-          SiteSprout
-        </a>
-      </div>
-      
-      <div class="nav-menu" id="navMenu">
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#templates" class="nav-link">Templates</a>
-        <a href="#pricing" class="nav-link">Pricing</a>
-        <a href="/login" class="nav-link">Login</a>
-        <a href="/admin" class="btn btn-primary">Get Started</a>
-      </div>
-      
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>RestaurantBuilder</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#themes" class="nav-link">Themes</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-mobile">
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
     </nav>
-  </header>
 
-  <section class="hero-section">
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-text">✨ No Coding Required</span>
-        </div>
-        <h1 class="hero-title">
-          Build Your Stunning Website in
-          <span class="gradient-text">Minutes</span>
-        </h1>
-        <p class="hero-description">
-          Our intuitive platform empowers you to create a professional online presence without any coding.
-          Showcase your business, portfolio, or online store with beautiful, responsive templates.
-        </p>
-        <div class="hero-actions">
-          <a href="/admin" class="btn btn-primary btn-large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            Build Your Website for Free
-          </a>
-          <a href="#templates" class="btn btn-secondary btn-large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-              <path d="M2 17l10 5 10-5"></path>
-              <path d="M2 12l10 5 10-5"></path>
-            </svg>
-            Browse Themes
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">1,500+</span>
-            <span class="stat-label">Websites Built</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">3 Mins</span>
-            <span class="stat-label">Average Setup</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">Top-Tier</span>
-            <span class="stat-label">Support</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-mockup">
-            <div class="mockup-browser">
-              <div class="browser-header">
-                <div class="browser-dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Build Stunning Restaurant Websites in Minutes</h1>
+                <p class="hero-subtitle">Choose from premium themes designed for cafes, restaurants, and QSRs. Perfect for Indian businesses with mobile-first design.</p>
+                <div class="hero-cta">
+                    <a href="#themes" class="btn btn-primary">Explore Themes</a>
+                    <a href="/admin" class="btn btn-secondary">Start Building</a>
                 </div>
-              </div>
-              <div class="browser-content">
-                <img src="https://via.placeholder.com/600x400.png/f0f0f0/cccccc?text=Your+Beautiful+Website" alt="Website preview" class="mockup-image">
-              </div>
+            </div>
+            <div class="hero-image">
+                <img src="/placeholder.svg?height=500&width=600" alt="Restaurant Website Preview" />
             </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="features-section" id="features">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Everything you need to create a stunning website</h2>
-        <p class="section-description">
-          Our platform is packed with powerful features to help you succeed online.
-        </p>
-      </div>
-      
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          </div>
-          <h3 class="feature-title">Professionally Designed Themes</h3>
-          <p class="feature-description">
-            Choose from a variety of beautiful, fully customizable themes to match your brand and style.
-          </p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-          </div>
-          <h3 class="feature-title">Easy-to-Use Website Builder</h3>
-          <p class="feature-description">
-            Our intuitive drag-and-drop builder makes it simple to customize your site. No coding skills needed.
-          </p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 4 16.25"></path><path d="M8 10h.01"></path></svg>
-          </div>
-          <h3 class="feature-title">Responsive by Default</h3>
-          <p class="feature-description">
-            Your website will look perfect on any device, from desktops to smartphones, without any extra effort.
-          </p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
-          </div>
-          <h3 class="feature-title">Optimized for Performance</h3>
-          <p class="feature-description">
-            We optimize your site for speed, ensuring a smooth and enjoyable experience for your visitors.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="templates-section" id="templates">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Beautiful Themes for Any Industry</h2>
-        <p class="section-description">
-          Get a professional design that fits your brand, no matter what business you're in.
-        </p>
-      </div>
-      
-      <div class="templates-grid">
-        <div class="template-card">
-          <div class="template-preview">
-            <img src="https://via.placeholder.com/400x300.png/e0e7ff/8b5cf6?text=Modern+Cafe" alt="Cafe & Restaurant Template" class="template-image">
-            <div class="template-overlay">
-              <a href="/admin" class="btn btn-white">Use This Template</a>
+    <!-- Themes Showcase -->
+    <section id="themes" class="themes-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Choose Your Perfect Theme</h2>
+                <p class="section-subtitle">Professional designs tailored for different restaurant types</p>
             </div>
-          </div>
-          <div class="template-info">
-            <h3 class="template-name">Modern Cafe & Restaurant</h3>
-            <p class="template-description">A theme designed to showcase your menu and attract more customers.</p>
-          </div>
-        </div>
-        
-        <div class="template-card">
-          <div class="template-preview">
-            <img src="https://via.placeholder.com/400x300.png/dcfce7/34d399?text=Creative+Portfolio" alt="Portfolio Template" class="template-image">
-            <div class="template-overlay">
-              <a href="/admin" class="btn btn-white">Use This Template</a>
+
+            <!-- Cafe Themes -->
+            <div class="theme-category">
+                <h3 class="category-title">Cafe Themes</h3>
+                <div class="themes-grid">
+                    <div class="theme-card" data-theme="cozy-cafe">
+                        <div class="theme-preview">
+                            <div class="preview-header cozy-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Cozy Corner Cafe</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content cozy-content">
+                                <h4>Welcome to Warmth</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Artisan Coffee</span>
+                                            <span>₹180</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Fresh Croissant</span>
+                                            <span>₹120</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Cozy & Minimal</h4>
+                            <p>Warm colors, soft fonts, perfect for neighborhood cafes</p>
+                            <div class="theme-features">
+                                <span class="feature">Coffee Menu</span>
+                                <span class="feature">Online Orders</span>
+                                <span class="feature">Gallery</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theme-card" data-theme="modern-coffee">
+                        <div class="theme-preview">
+                            <div class="preview-header modern-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Coffee Lab</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content modern-content">
+                                <h4>Brewing Excellence</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Specialty Brew</span>
+                                            <span>₹250</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Cold Brew</span>
+                                            <span>₹200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Modern Coffee Lab</h4>
+                            <p>Dark theme with neon accents, perfect for specialty coffee shops</p>
+                            <div class="theme-features">
+                                <span class="feature">Brewing Methods</span>
+                                <span class="feature">Subscription</span>
+                                <span class="feature">Blog</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theme-card" data-theme="organic-cafe">
+                        <div class="theme-preview">
+                            <div class="preview-header organic-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Green Leaf Cafe</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content organic-content">
+                                <h4>Farm to Cup</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Organic Latte</span>
+                                            <span>₹220</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Healthy Bowl</span>
+                                            <span>₹280</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Nature / Organic</h4>
+                            <p>Green earthy colors, sustainability focused</p>
+                            <div class="theme-features">
+                                <span class="feature">Organic Menu</span>
+                                <span class="feature">Workshops</span>
+                                <span class="feature">Sustainability</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="template-info">
-            <h3 class="template-name">Stylish Creative Portfolio</h3>
-            <p class="template-description">A beautiful and modern way to showcase your creative work and projects.</p>
-          </div>
-        </div>
-        
-        <div class="template-card">
-          <div class="template-preview">
-            <img src="https://via.placeholder.com/400x300.png/fee2e2/f87171?text=Small+Business" alt="Business Template" class="template-image">
-            <div class="template-overlay">
-              <a href="/admin" class="btn btn-white">Use This Template</a>
+
+            <!-- Restaurant Themes -->
+            <div class="theme-category">
+                <h3 class="category-title">Restaurant Themes</h3>
+                <div class="themes-grid">
+                    <div class="theme-card" data-theme="luxury-dining">
+                        <div class="theme-preview">
+                            <div class="preview-header luxury-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">The Golden Spoon</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content luxury-content">
+                                <h4>Fine Dining Experience</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Truffle Risotto</span>
+                                            <span>₹1,200</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Wagyu Steak</span>
+                                            <span>₹2,500</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Luxury Fine Dining</h4>
+                            <p>Black and gold elegance for upscale restaurants</p>
+                            <div class="theme-features">
+                                <span class="feature">Reservations</span>
+                                <span class="feature">Wine Pairing</span>
+                                <span class="feature">Private Dining</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theme-card" data-theme="family-restaurant">
+                        <div class="theme-preview">
+                            <div class="preview-header family-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Family Kitchen</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content family-content">
+                                <h4>Home Style Cooking</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Butter Chicken</span>
+                                            <span>₹320</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Dal Makhani</span>
+                                            <span>₹280</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Family Restaurant</h4>
+                            <p>Bright, friendly design for family dining</p>
+                            <div class="theme-features">
+                                <span class="feature">Kids Menu</span>
+                                <span class="feature">Family Offers</span>
+                                <span class="feature">Table Booking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theme-card" data-theme="traditional-restaurant">
+                        <div class="theme-preview">
+                            <div class="preview-header traditional-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Heritage Flavors</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content traditional-content">
+                                <h4>Authentic Cuisine</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Biryani Special</span>
+                                            <span>₹450</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Tandoori Platter</span>
+                                            <span>₹650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Cultural / Traditional</h4>
+                            <p>Culturally inspired design celebrating heritage</p>
+                            <div class="theme-features">
+                                <span class="feature">Chef Specials</span>
+                                <span class="feature">Festival Menus</span>
+                                <span class="feature">Story Section</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="template-info">
-            <h3 class="template-name">Professional Small Business</h3>
-            <p class="template-description">A clean and professional look to build trust with your customers and clients.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h2 class="cta-title">Ready to Build Your Online Presence?</h2>
-        <p class="cta-description">
-          Join thousands of creators and entrepreneurs who have built their websites with SiteSprout.
-        </p>
-        <div class="cta-actions">
-          <a href="/admin" class="btn btn-primary btn-large">
-            Start Building Now
-          </a>
-          <div class="cta-note">
-            <span>✓ No credit card required</span>
-            <span>✓ Launch in minutes</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+            <!-- QSR Themes -->
+            <div class="theme-category">
+                <h3 class="category-title">QSR / Fast Food Themes</h3>
+                <div class="themes-grid">
+                    <div class="theme-card" data-theme="bold-fastfood">
+                        <div class="theme-preview">
+                            <div class="preview-header bold-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Quick Bites</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content bold-content">
+                                <h4>Fast & Fresh</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Burger Combo</span>
+                                            <span>₹199</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Pizza Slice</span>
+                                            <span>₹149</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Bold Fast Food</h4>
+                            <p>High-energy colors perfect for quick service</p>
+                            <div class="theme-features">
+                                <span class="feature">Quick Order</span>
+                                <span class="feature">Combo Deals</span>
+                                <span class="feature">Delivery</span>
+                            </div>
+                        </div>
+                    </div>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="logo">SiteSprout</div>
-          <p class="footer-description">
-            The simplest way to create a professional website.
-          </p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Product</h4>
-            <a href="#features">Features</a>
-            <a href="#templates">Templates</a>
-            <a href="#pricing">Pricing</a>
-          </div>
-          <div class="footer-column">
-            <h4>Company</h4>
-            <a href="#">About Us</a>
-            <a href="#">Careers</a>
-            <a href="#">Contact</a>
-          </div>
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 SiteSprout. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+                    <div class="theme-card" data-theme="street-food">
+                        <div class="theme-preview">
+                            <div class="preview-header street-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Street Flavors</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content street-content">
+                                <h4>Trending Tastes</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Pani Puri</span>
+                                            <span>₹80</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Vada Pav</span>
+                                            <span>₹60</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Youth / Street Food</h4>
+                            <p>Vibrant design for street food vendors</p>
+                            <div class="theme-features">
+                                <span class="feature">Trending Menu</span>
+                                <span class="feature">Loyalty Program</span>
+                                <span class="feature">Social Media</span>
+                            </div>
+                        </div>
+                    </div>
 
-  <script src="/js/homepage.js"></script>
+                    <div class="theme-card" data-theme="tech-smart">
+                        <div class="theme-preview">
+                            <div class="preview-header tech-header">
+                                <div class="preview-nav">
+                                    <span class="preview-logo">Smart Eats</span>
+                                    <div class="preview-menu">
+                                        <span>Home</span>
+                                        <span>Menu</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-content tech-content">
+                                <h4>AI Powered Ordering</h4>
+                                <div class="preview-menu-section">
+                                    <h5>Main Dishes</h5>
+                                    <div class="menu-items">
+                                        <div class="menu-item">
+                                            <span>Smart Bowl</span>
+                                            <span>₹299</span>
+                                        </div>
+                                        <div class="menu-item">
+                                            <span>Tech Wrap</span>
+                                            <span>₹249</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-info">
+                            <h4>Tech Smart Fast Food</h4>
+                            <p>Futuristic UI with smart ordering features</p>
+                            <div class="theme-features">
+                                <span class="feature">AI Recommendations</span>
+                                <span class="feature">Smart Ordering</span>
+                                <span class="feature">Digital Wallet</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Perfect for Indian businesses of all sizes</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">999</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="feature">✓ 1 Restaurant Website</div>
+                        <div class="feature">✓ Mobile Responsive</div>
+                        <div class="feature">✓ Basic Menu Management</div>
+                        <div class="feature">✓ Contact Form</div>
+                        <div class="feature">✓ Google Maps Integration</div>
+                    </div>
+                    <button class="btn btn-outline">Get Started</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Professional</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">1,999</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="feature">✓ 3 Restaurant Websites</div>
+                        <div class="feature">✓ Online Ordering System</div>
+                        <div class="feature">✓ Table Reservations</div>
+                        <div class="feature">✓ Payment Gateway</div>
+                        <div class="feature">✓ Analytics Dashboard</div>
+                        <div class="feature">✓ WhatsApp Integration</div>
+                    </div>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">4,999</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="feature">✓ Unlimited Websites</div>
+                        <div class="feature">✓ Multi-location Support</div>
+                        <div class="feature">✓ Advanced Analytics</div>
+                        <div class="feature">✓ Custom Integrations</div>
+                        <div class="feature">✓ Priority Support</div>
+                        <div class="feature">✓ White Label Solution</div>
+                    </div>
+                    <button class="btn btn-outline">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Ready to Build Your Restaurant Website?</h2>
+                    <p>Join thousands of Indian restaurants already using our platform to grow their business online.</p>
+                    <div class="contact-features">
+                        <div class="contact-feature">
+                            <div class="feature-icon">🚀</div>
+                            <div class="feature-text">
+                                <h4>Quick Setup</h4>
+                                <p>Get your website live in under 10 minutes</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-text">
+                                <h4>Mobile First</h4>
+                                <p>Optimized for Indian mobile users</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature">
+                            <div class="feature-icon">💰</div>
+                            <div class="feature-text">
+                                <h4>Affordable Pricing</h4>
+                                <p>Plans starting from just ₹999/month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form class="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Restaurant Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select Business Type</option>
+                                <option value="cafe">Cafe</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="qsr">QSR / Fast Food</option>
+                                <option value="cloud-kitchen">Cloud Kitchen</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Start Free Trial</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>RestaurantBuilder</h3>
+                    <p>Empowering Indian restaurants with beautiful, functional websites that drive business growth.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#themes">Themes</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="/admin">Website Builder</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#contact">Contact Us</a>
+                        <a href="#">Help Center</a>
+                        <a href="#">Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RestaurantBuilder. Made with ❤️ for Indian restaurants.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
 </body>
 </html>
