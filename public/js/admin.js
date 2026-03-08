@@ -1,4 +1,4 @@
-(function(){
+document.addEventListener('DOMContentLoaded', () => {
   // Enhanced form validation and UX
   const form = document.getElementById('restaurantForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -12,7 +12,7 @@
     return text
       .toLowerCase()
       .replace(/[^a-z0-9 -]/g, '')
-      .replace(/\\s+/g, '-')
+      .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim('-');
   }
@@ -300,33 +300,31 @@
   }
 
   // Enhanced image removal with confirmation
-  document.addEventListener('DOMContentLoaded', () => {
-    const removedImagesInput = document.getElementById('removedImages');
-    const removeImageBtns = document.querySelectorAll('.remove-image');
-    let removedImages = [];
+  const removedImagesInput = document.getElementById('removedImages');
+  const removeImageBtns = document.querySelectorAll('.remove-image');
+  let removedImages = [];
 
-    removeImageBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
+  removeImageBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      if (confirm('Are you sure you want to remove this image?')) {
+        const imageUrl = btn.dataset.imageUrl;
+        const container = btn.closest('.gallery-image-container');
         
-        if (confirm('Are you sure you want to remove this image?')) {
-          const imageUrl = btn.dataset.imageUrl;
-          const container = btn.closest('.gallery-image-container');
+        if (imageUrl && container) {
+          container.style.opacity = '0.5';
+          container.style.transform = 'scale(0.9)';
           
-          if (imageUrl && container) {
-            container.style.opacity = '0.5';
-            container.style.transform = 'scale(0.9)';
-            
-            setTimeout(() => {
-              container.style.display = 'none';
-              removedImages.push(imageUrl);
-              if (removedImagesInput) {
-                removedImagesInput.value = removedImages.join(',');
-              }
-            }, 200);
-          }
+          setTimeout(() => {
+            container.style.display = 'none';
+            removedImages.push(imageUrl);
+            if (removedImagesInput) {
+              removedImagesInput.value = removedImages.join(',');
+            }
+          }, 200);
         }
-      });
+      }
     });
   });
 
@@ -364,5 +362,5 @@
   formInputs.forEach(input => {
     input.addEventListener('input', autoSave);
   });
+});
 
-})();
