@@ -42,6 +42,10 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/create', (req, res) => {
+  res.render('admin', { restaurant: null });
+});
+
 router.get('/admin', async (req, res) => {
   try {
     const { slug } = req.query;
