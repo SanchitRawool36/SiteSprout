@@ -3,233 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - <%= restaurant ? 'Edit' : 'Create' %> Restaurant</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Admin | SiteSprout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/mobile.css">
 </head>
 <body>
-  <div class="container admin-container">
-    <nav>
-      <a class="back-home" href="/">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-        Back to Home
-      </a>
-    </nav>
-    
-    <div class="card">
-      <h1 class="admin-title">
-        <%= restaurant ? 'Edit Your Restaurant' : 'Create Your Restaurant Website' %>
-        <% if (restaurant) { %>
-          <span style="font-size: 1rem; font-weight: 500; color: var(--gray-500); display: block; margin-top: 0.5rem;">
-            Last updated: <%= new Date(restaurant.updatedAt || restaurant.createdAt).toLocaleDateString() %>
-          </span>
-        <% } %>
-      </h1>
-      
-      <div class="admin-grid">
-        <div class="form-column">
-          <form action="<%= restaurant ? '/update' : '/create' %>" method="POST" class="admin-form" enctype="multipart/form-data" id="restaurantForm">
-            <input type="hidden" id="menuJson" name="menuJson">
-            <% if (restaurant) { %>
-              <input type="hidden" name="restaurantId" value="<%= restaurant._id %>">
-            <% } %>
-            
-            <!-- Basic Information Section -->
-            <section class="form-section">
-              <h3 class="section-title">Basic Information</h3>
-              
+  <div class="page-container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2 class="brand">SiteSprout</h2>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="menu-item active">
+          <a href="#"><i class="fas fa-store-alt"></i> Restaurant</a>
+        </li>
+        <li class="menu-item">
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <header class="main-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="fas fa-bars"></i>
+</button>
+<h1 class="header-title"><%= restaurant ? 'Edit Restaurant' : 'Create Restaurant' %></h1>
+        <div class="header-actions">
+          <% if (restaurant) { %>
+            <a href="/<%= restaurant.slug %>" class="btn btn-outline" target="_blank">
+              <i class="fas fa-eye"></i> Preview
+            </a>
+          <% } %>
+          <button type="submit" form="restaurantForm" class="btn btn-primary">
+            <i class="fas fa-save"></i> <%= restaurant ? 'Update' : 'Create' %>
+          </button>
+        </div>
+      </header>
+      <div class="content-wrapper">
+        <form action="<%= restaurant ? '/update' : '/create' %>" method="POST" class="admin-form" enctype="multipart/form-data" id="restaurantForm">
+          <input type="hidden" id="menuJson" name="menuJson">
+          <% if (restaurant) { %>
+            <input type="hidden" name="restaurantId" value="<%= restaurant._id %>">
+          <% } %>
+
+          <div class="form-section">
+            <h3 class="section-title">Basic Information</h3>
+            <div class="form-grid">
               <div class="form-group">
-                <label for="name">Restaurant Name *</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your restaurant name" value="<%= restaurant ? restaurant.name : '' %>">
-                <div class="form-feedback" id="name-feedback"></div>
+                <label for="name">Restaurant Name</label>
+                <input type="text" id="name" name="name" required value="<%= restaurant ? restaurant.name : '' %>">
               </div>
-              
               <div class="form-group">
                 <label for="slug">URL Slug</label>
-                <input type="text" id="slug" name="slug" placeholder="your-restaurant-name" value="<%= restaurant ? restaurant.slug : '' %>">
-                <div class="form-feedback">This will be your website URL: yoursite.com/<span id="slug-preview">your-restaurant-name</span></div>
+                <input type="text" id="slug" name="slug" value="<%= restaurant ? restaurant.slug : '' %>">
               </div>
-              
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="3" placeholder="Tell customers about your restaurant..."><%= restaurant ? restaurant.description : '' %></textarea>
+                <textarea id="description" name="description" rows="3"><%= restaurant ? restaurant.description : '' %></textarea>
               </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="businessType">Business Type</label>
-                  <select id="businessType" name="businessType">
-                    <option value="Restaurant" <%= restaurant && restaurant.businessType === 'Restaurant' ? 'selected' : '' %>>Restaurant</option>
-                    <option value="Cafe" <%= restaurant && restaurant.businessType === 'Cafe' ? 'selected' : '' %>>Cafe</option>
-                    <option value="FastFood" <%= restaurant && restaurant.businessType === 'FastFood' ? 'selected' : '' %>>Fast Food</option>
-                    <option value="QSR" <%= restaurant && restaurant.businessType === 'QSR' ? 'selected' : '' %>>QSR</option>
-                  </select>
-                </div>
-                
-                <div class="form-group">
-                  <label for="themeChoice">Theme</label>
-                  <select id="themeChoice" name="themeChoice">
-                    <option value="restro" <%= restaurant && restaurant.themeChoice === 'restro' ? 'selected' : '' %>>Restro</option>
-                    <option value="cafe" <%= restaurant && restaurant.themeChoice === 'cafe' ? 'selected' : '' %>>Cafe</option>
-                    <option value="fastfood" <%= restaurant && restaurant.themeChoice === 'fastfood' ? 'selected' : '' %>>Fast Food</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-
-            <!-- Hero Section -->
-            <section class="form-section">
-              <h3 class="section-title">Hero Section</h3>
-              
               <div class="form-group">
-                <label for="heroHeadline">Hero Headline</label>
-                <input type="text" id="heroHeadline" name="hero[headline]" placeholder="Welcome to Amazing Food" value="<%= restaurant && restaurant.hero ? restaurant.hero.headline : '' %>">
-              </div>
-              
-              <div class="form-group">
-                <label for="heroSubheadline">Hero Subheadline</label>
-                <input type="text" id="heroSubheadline" name="hero[subheadline]" placeholder="Experience the finest dining in the city" value="<%= restaurant && restaurant.hero ? restaurant.hero.subheadline : '' %>">
-              </div>
-              
-              <div class="form-group">
-                <label for="heroImage">Hero Image</label>
-                <input type="file" id="heroImage" name="heroImage" accept="image/*">
-                <div class="form-feedback">Recommended size: 1920x1080px</div>
-              </div>
-            </section>
-
-            <!-- Branding Section -->
-            <section class="form-section">
-              <h3 class="section-title">Branding</h3>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="logo">Logo</label>
-                  <input type="file" id="logo" name="logo" accept="image/*">
-                  <div class="form-feedback">Recommended: Square format, 512x512px</div>
-                </div>
-                
-                <div class="form-group">
-                  <label for="themeColor">Theme Color</label>
-                  <input type="color" id="themeColor" name="themeColor" value="<%= restaurant ? restaurant.themeColor : '#3b82f6' %>">
-                </div>
-              </div>
-            </section>
-
-            <!-- Gallery Section -->
-            <section class="form-section">
-              <h3 class="section-title">Gallery</h3>
-              
-              <div class="form-group">
-                <label for="gallery">Gallery Images</label>
-                <input type="file" id="gallery" name="gallery" multiple accept="image/*">
-                <div class="form-feedback">Upload multiple images to showcase your restaurant</div>
-              </div>
-              
-              <% if (restaurant && restaurant.gallery && restaurant.gallery.length > 0) { %>
-                <div class="form-group">
-                  <label>Current Gallery</label>
-                  <div class="gallery-preview">
-                    <% restaurant.gallery.forEach(img => { %>
-                      <div class="gallery-image-container">
-                        <img src="<%= img %>" alt="Gallery Image" class="gallery-thumb">
-                        <button type="button" class="btn remove-image" data-image-url="<%= img %>"">×</button>
-                      </div>
-                    <% }) %>
-                  </div>
-                </div>
-              <% } %>
-              <input type="hidden" name="removedImages" id="removedImages">
-            </section>
-
-            <!-- Contact Information -->
-            <section class="form-section">
-              <h3 class="section-title">Contact Information</h3>
-              
-              <div class="form-group">
-                <label for="openingHours">Opening Hours</label>
-                <input type="text" id="openingHours" name="openingHours" placeholder="Mon–Sun 9:00am – 10:00pm" value="<%= restaurant ? restaurant.openingHours : '' %>">
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" value="<%= restaurant ? restaurant.phone : '' %>">
-                </div>
-                
-                <div class="form-group">
-                  <label for="address">Address</label>
-                  <input type="text" id="address" name="address" placeholder="123, MG Road, Bangalore, Karnataka" value="<%= restaurant ? restaurant.address : '' %>">
-                </div>
-              </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="socialInstagram">Instagram URL</label>
-                  <input type="url" id="socialInstagram" name="social[instagram]" placeholder="https://instagram.com/yourrestaurant" value="<%= restaurant && restaurant.social ? restaurant.social.instagram : '' %>">
-                </div>
-                
-                <div class="form-group">
-                  <label for="socialFacebook">Facebook URL</label>
-                  <input type="url" id="socialFacebook" name="social[facebook]" placeholder="https://facebook.com/yourrestaurant" value="<%= restaurant && restaurant.social ? restaurant.social.facebook : '' %>">
-                </div>
-              </div>
-            </section>
-
-            <!-- Menu Section -->
-            <section class="form-section">
-              <h3 class="section-title">Menu</h3>
-              <div id="categoriesContainer"></div>
-              <button id="addCategoryBtn" type="button" class="btn ghost">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 5v14M5 12h14"/>
-                </svg>
-                Add Category
-              </button>
-            </section>
-
-            <div class="form-actions">
-              <button type="submit" class="btn cta" id="submitBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                  <polyline points="17,21 17,13 7,13 7,21"/>
-                  <polyline points="7,3 7,8 15,8"/>
-                </svg>
-                <%= restaurant ? 'Update Website' : 'Create Website' %>
-              </button>
-            </div>
-          </form>
-        </div>
-        
-        <div class="preview-column">
-          <div class="live-preview">
-            <div class="preview-header">
-              <h3 id="previewName">Your Restaurant</h3>
-            </div>
-            <div class="preview-content">
-              <p id="previewType">Type: Restaurant</p>
-              <p id="previewDescription">Short description will appear here.</p>
-              <div class="preview-stats">
-                <div class="stat">
-                  <span class="stat-label">Menu Items</span>
-                  <span class="stat-value" id="previewMenuCount">0</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Categories</span>
-                  <span class="stat-value" id="previewCategoryCount">0</span>
-                </div>
+                <label for="businessType">Business Type</label>
+                <select id="businessType" name="businessType">
+                  <option value="Restaurant" <%= restaurant && restaurant.businessType === 'Restaurant' ? 'selected' : '' %>>Restaurant</option>
+                  <option value="Cafe" <%= restaurant && restaurant.businessType === 'Cafe' ? 'selected' : '' %>>Cafe</option>
+                  <option value="FastFood" <%= restaurant && restaurant.businessType === 'FastFood' ? 'selected' : '' %>>Fast Food</option>
+                  <option value="QSR" <%= restaurant && restaurant.businessType === 'QSR' ? 'selected' : '' %>>QSR</option>
+                </select>
               </div>
             </div>
           </div>
-        </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Branding & Theme</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="logo">Logo</label>
+                <input type="file" id="logo" name="logo" accept="image/*">
+              </div>
+              <div class="form-group">
+                <label for="themeColor">Theme Color</label>
+                <input type="color" id="themeColor" name="themeColor" value="<%= restaurant ? restaurant.themeColor : '#3b82f6' %>">
+              </div>
+              <div class="form-group">
+                <label for="themeChoice">Theme</label>
+                <select id="themeChoice" name="themeChoice">
+                  <option value="restro" <%= restaurant && restaurant.themeChoice === 'restro' ? 'selected' : '' %>>Restro</option>
+                  <option value="cafe" <%= restaurant && restaurant.themeChoice === 'cafe' ? 'selected' : '' %>>Cafe</option>
+                  <option value="fastfood" <%= restaurant && restaurant.themeChoice === 'fastfood' ? 'selected' : '' %>>Fast Food</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Hero Section</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="heroHeadline">Hero Headline</label>
+                    <input type="text" id="heroHeadline" name="hero[headline]" value="<%= restaurant && restaurant.hero ? restaurant.hero.headline : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="heroSubheadline">Hero Subheadline</label>
+                    <input type="text" id="heroSubheadline" name="hero[subheadline]" value="<%= restaurant && restaurant.hero ? restaurant.hero.subheadline : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="heroImage">Hero Image</label>
+                    <input type="file" id="heroImage" name="heroImage" accept="image/*">
+                  </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Contact Information</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="openingHours">Opening Hours</label>
+                    <input type="text" id="openingHours" name="openingHours" value="<%= restaurant ? restaurant.openingHours : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" value="<%= restaurant ? restaurant.phone : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" value="<%= restaurant ? restaurant.address : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="socialInstagram">Instagram URL</label>
+                    <input type="url" id="socialInstagram" name="social[instagram]" value="<%= restaurant && restaurant.social ? restaurant.social.instagram : '' %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="socialFacebook">Facebook URL</label>
+                    <input type="url" id="socialFacebook" name="social[facebook]" value="<%= restaurant && restaurant.social ? restaurant.social.facebook : '' %>">
+                  </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Image Gallery</h3>
+            <div class="form-group">
+              <label for="gallery">Upload Images</label>
+              <input type="file" id="gallery" name="gallery" multiple accept="image/*">
+            </div>
+            <% if (restaurant && restaurant.gallery && restaurant.gallery.length > 0) { %>
+              <div class="gallery-preview">
+                <% restaurant.gallery.forEach(img => { %>
+                  <div class="gallery-image">
+                    <img src="<%= img %>" alt="Gallery Image">
+                    <button type="button" class="remove-image" data-image-url="<%= img %>">&times;</button>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+            <input type="hidden" name="removedImages" id="removedImages">
+          </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Menu</h3>
+            <div id="categoriesContainer"></div>
+            <button id="addCategoryBtn" type="button" class="btn btn-outline">
+              <i class="fas fa-plus"></i> Add Category
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+
   <script>
     const rawMenuData = <%- restaurant && restaurant.menu ? JSON.stringify(restaurant.menu) : '[]' %>;
   </script>
